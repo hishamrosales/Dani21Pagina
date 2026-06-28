@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¡Feliz Cumpleaños! 🎉</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FFF8EF;
+    --paper:#FFFFFF;
+    --ink:#2B2540;
+    --pink:#FF5DA2;
+    --pink-deep:#E8408C;
+    --yellow:#FFD23F;
+    --yellow-deep:#E6B800;
+    --purple:#8C54FF;
+    --purple-deep:#6E3AE0;
+    --blue:#3FC1E0;
+    --blue-deep:#1EA0C0;
+    --shadow:0 10px 30px rgba(43,37,64,0.14);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Quicksand',sans-serif;
+    overflow-x:hidden;
+    position:relative;
+  }
+  h1,h2{font-family:'Fredoka',sans-serif;margin:0;}
+  .eyebrow{
+    font-weight:700;
+    letter-spacing:0.14em;
+    font-size:0.72rem;
+    color:var(--purple-deep);
+    text-transform:uppercase;
+    margin-bottom:0.6rem;
+  }
+  .section{
+    max-width:900px;
+    margin:0 auto;
+    padding:6rem 1.5rem;
+    text-align:center;
+    position:relative;
+    z-index:1;
+  }
+  .section-title{font-size:2.2rem;margin-bottom:0.6rem;}
+  .section-sub{font-size:1.05rem;opacity:0.85;margin-bottom:2.5rem;}
+  button{font-family:'Quicksand',sans-serif;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:2rem;
+    position:relative;
+  }
+  .gift-wrap{
+    cursor:pointer;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:1.4rem;
+    transition:opacity .5s ease, transform .5s ease;
+    background:none;
+    border:none;
+  }
+  .gift-wrap.hidden{opacity:0;transform:scale(.85);pointer-events:none;position:absolute;}
+  .gift-box{position:relative;width:160px;height:130px;}
+  .gift-base{
+    position:absolute;bottom:0;width:100%;height:90px;
+    background:var(--pink);border-radius:10px;box-shadow:var(--shadow);
+    transition:transform .5s ease .15s, opacity .5s ease .15s;
+  }
+  .gift-lid{
+    position:absolute;top:0;width:112%;left:-6%;height:40px;
+    background:var(--pink-deep);border-radius:8px;
+    transition:transform .7s cubic-bezier(.34,1.56,.64,1), opacity .5s ease;
+  }
+  .gift-ribbon-v{position:absolute;left:50%;top:0;width:16px;height:130px;background:var(--yellow);transform:translateX(-50%);}
+  .gift-ribbon-h{position:absolute;top:34px;left:0;width:100%;height:16px;background:var(--yellow);transition:opacity .4s ease;}
+  #giftBox.opened .gift-lid{transform:translateY(-95px) rotate(-22deg);opacity:0;}
+  #giftBox.opened .gift-base{transform:scale(.9);opacity:0;}
+  #giftBox.opened .gift-ribbon-v,#giftBox.opened .gift-ribbon-h{opacity:0;}
+
+  .tap-hint{font-weight:700;font-size:1rem;animation:bounce 1.6s infinite;}
+  @keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+
+  .hero-reveal{display:none;flex-direction:column;align-items:center;gap:1rem;}
+  .hero-reveal.show{display:flex;animation:fadeUp .8s ease;}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+  .hero-title{font-size:clamp(2rem,7vw,3.4rem);line-height:1.18;}
+  .hero-title span{color:var(--pink-deep);}
+  .hero-sub{font-size:1.1rem;max-width:480px;}
+  .scroll-cue{
+    margin-top:.6rem;border:none;background:var(--purple-deep);color:#fff;
+    font-weight:700;font-size:1rem;padding:0.9rem 1.6rem;border-radius:50px;
+    cursor:pointer;box-shadow:var(--shadow);transition:transform .2s ease;
+  }
+  .scroll-cue:hover{transform:translateY(-3px);}
+
+  /* ---------- ambient floaters ---------- */
+  .floaters{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+  .floater{
+    position:absolute;bottom:-60px;width:32px;height:40px;
+    border-radius:50% 50% 50% 50% / 60% 60% 45% 45%;
+    opacity:.5;animation:floatUp linear infinite;
+  }
+  .floater::after{
+    content:'';position:absolute;bottom:-12px;left:50%;width:2px;height:14px;
+    background:rgba(43,37,64,.35);transform:translateX(-50%);
+  }
+  @keyframes floatUp{
+    from{transform:translateY(0) translateX(0) rotate(-4deg);}
+    to{transform:translateY(-118vh) translateX(24px) rotate(4deg);}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .floater{display:none;}
+    .tap-hint{animation:none;}
+  }
+
+  /* ---------- photos ---------- */
+  .corkboard{display:flex;flex-wrap:wrap;justify-content:center;gap:2rem 1.4rem;padding-top:1rem;}
+  .polaroid{
+    background:var(--paper);padding:.8rem .8rem 1.1rem;border-radius:6px;
+    box-shadow:var(--shadow);width:190px;transition:transform .25s ease;
+  }
+  .polaroid:hover{transform:scale(1.06) rotate(0deg) !important;z-index:2;}
+  .photo-frame{width:100%;height:170px;border-radius:3px;overflow:hidden;}
+  .photo-frame img{width:100%;height:100%;object-fit:cover;display:block;}
+  .photo-placeholder{
+    width:100%;height:100%;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;gap:.3rem;font-size:.85rem;font-weight:700;color:#fff;
+    text-align:center;border-radius:3px;line-height:1.3;
+  }
+  .polaroid-caption{font-family:'Caveat',cursive;font-size:1.3rem;text-align:center;margin-top:.6rem;}
+
+  /* ---------- balloons / 21 reasons ---------- */
+  .balloon-grid{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));
+    gap:1.1rem 0.9rem;
+  }
+  .balloon{
+    position:relative;height:112px;background:none;border:none;cursor:pointer;
+    perspective:800px;padding:0;
+  }
+  .balloon-inner{
+    position:relative;width:100%;height:100%;transition:transform .6s;
+    transform-style:preserve-3d;
+  }
+  .balloon.flipped .balloon-inner{transform:rotateY(180deg);}
+  .balloon-face{
+    position:absolute;inset:0;border-radius:50% 50% 50% 50%/58% 58% 42% 42%;
+    display:flex;align-items:center;justify-content:center;backface-visibility:hidden;
+    color:#fff;box-shadow:var(--shadow);padding:.5rem;
+  }
+  .balloon-face.front{font-family:'Fredoka',sans-serif;font-size:1.5rem;font-weight:600;}
+  .balloon-face.back{
+    transform:rotateY(180deg);font-size:.66rem;line-height:1.25;font-weight:700;
+  }
+  .balloon::after{
+    content:'';position:absolute;bottom:-8px;left:50%;width:0;height:0;
+    border-left:5px solid transparent;border-right:5px solid transparent;
+    border-top:9px solid var(--ink);opacity:.22;transform:translateX(-50%);
+  }
+  .bonus-message{
+    margin-top:2.2rem;background:var(--yellow);color:var(--ink);font-weight:700;
+    padding:1.2rem 1.5rem;border-radius:14px;display:none;box-shadow:var(--shadow);
+  }
+  .bonus-message.show{display:block;animation:fadeUp .6s ease;}
+
+  /* ---------- envelope / letter ---------- */
+  .envelope{width:240px;height:160px;margin:0 auto 2.5rem;position:relative;cursor:pointer;}
+  .envelope-body{
+    position:absolute;inset:0;background:var(--blue);border-radius:8px;
+    display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;
+    box-shadow:var(--shadow);
+  }
+  .envelope-body span{transition:opacity .3s ease;}
+  .envelope-flap{
+    position:absolute;top:0;left:0;width:100%;height:50%;background:var(--blue-deep);
+    clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top;
+    transition:transform .5s ease;border-radius:8px 8px 0 0;
+  }
+  .envelope.open .envelope-flap{transform:rotateX(180deg);}
+  .envelope.open .envelope-body span{opacity:0;}
+  .letter-paper{
+    max-width:480px;margin:0 auto;background:var(--paper);border-radius:10px;
+    box-shadow:var(--shadow);padding:0 2rem;font-family:'Caveat',cursive;
+    font-size:1.4rem;line-height:1.5;text-align:left;color:var(--ink);
+    max-height:0;overflow:hidden;opacity:0;
+    transition:max-height .6s ease, opacity .6s ease, padding .6s ease;
+  }
+  .letter-paper.show{max-height:1200px;opacity:1;padding:2.2rem 2rem;}
+  .letter-paper p{margin:0 0 1rem;}
+  .letter-paper .signature{text-align:right;font-size:1.5rem;}
+
+  /* ---------- cake ---------- */
+  .cake{display:flex;justify-content:center;margin:2rem auto 1rem;position:relative;height:230px;}
+  .cake-layers{position:relative;width:220px;margin-top:60px;}
+  .cake-top{width:170px;height:55px;background:var(--paper);border-radius:14px 14px 6px 6px;margin:0 auto;box-shadow:var(--shadow);}
+  .cake-bottom{width:220px;height:70px;background:var(--pink);border-radius:10px;margin-top:-6px;box-shadow:var(--shadow);}
+  .candles{position:absolute;top:0;left:0;width:100%;display:flex;justify-content:center;gap:18px;}
+  .candle{width:8px;height:42px;border-radius:3px;position:relative;}
+  .flame{
+    position:absolute;top:-16px;left:50%;width:11px;height:17px;transform:translateX(-50%);
+    background:radial-gradient(circle at 50% 70%, var(--yellow) 0%, var(--pink-deep) 90%);
+    border-radius:50% 50% 50% 50%/65% 65% 35% 35%;cursor:pointer;
+    animation:flicker 1s ease-in-out infinite alternate;
+  }
+  @keyframes flicker{from{transform:translateX(-50%) scale(1);}to{transform:translateX(-50%) scale(.85,1.12);}}
+  .candle.blown .flame{display:none;}
+  .smoke{
+    position:absolute;top:-20px;left:50%;width:8px;height:8px;background:rgba(140,140,140,.55);
+    border-radius:50%;transform:translateX(-50%);animation:smokeUp 1.2s ease-out forwards;pointer-events:none;
+  }
+  @keyframes smokeUp{0%{opacity:.7;transform:translate(-50%,0) scale(1);}100%{opacity:0;transform:translate(-50%,-42px) scale(2.6);}}
+  @media (prefers-reduced-motion:reduce){.flame{animation:none;}}
+  .wish-message{margin-top:1.6rem;font-weight:700;font-size:1.15rem;color:var(--purple-deep);opacity:0;transition:opacity .6s ease;}
+  .wish-message.show{opacity:1;}
+
+  .footer{text-align:center;padding:3rem 1.5rem 4.5rem;font-weight:700;}
+  .replay-btn{
+    margin-top:1rem;border:none;background:var(--pink-deep);color:#fff;
+    font-weight:700;padding:.8rem 1.5rem;border-radius:50px;cursor:pointer;box-shadow:var(--shadow);
+  }
+
+  .confetti-layer{position:fixed;inset:0;pointer-events:none;z-index:999;overflow:hidden;}
+  .confetti-piece{position:absolute;top:-10px;border-radius:2px;animation:confettiFall linear forwards;}
+  @keyframes confettiFall{to{transform:translateY(110vh) rotate(720deg);opacity:.85;}}
+
+  button:focus-visible,.balloon:focus-visible,.envelope:focus-visible,.gift-wrap:focus-visible{
+    outline:3px solid var(--purple-deep);outline-offset:3px;
+  }
+
+  @media (max-width:600px){
+    .section{padding:4.5rem 1rem;}
+    .hero-title{font-size:2.1rem;}
+    .polaroid{width:148px;}
+    .photo-frame{height:140px;}
+    .balloon-grid{grid-template-columns:repeat(auto-fill,minmax(72px,1fr));}
+    .balloon{height:96px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="floaters" id="floaters"></div>
+<div class="confetti-layer" id="confettiLayer"></div>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <button class="gift-wrap" id="giftWrap" aria-label="Abrir regalo">
+    <div class="gift-box" id="giftBox">
+      <div class="gift-lid"></div>
+      <div class="gift-base"></div>
+      <div class="gift-ribbon-v"></div>
+      <div class="gift-ribbon-h"></div>
+    </div>
+    <p class="tap-hint">Toca el regalo 🎁</p>
+  </button>
+
+  <div class="hero-reveal" id="heroReveal">
+    <p class="eyebrow">21 años</p>
+    <h1 class="hero-title">¡Feliz cumpleaños,<br><span id="partnerNameHero">[NOMBRE]</span>!</h1>
+    <p class="hero-sub">Ya estás viejita. Ya casi tercera edad</p>
+    <button class="scroll-cue" onclick="scrollToSection('fotos')">Desliza hacia abajo ↓</button>
+  </div>
+</section>
+
+<!-- ============ FOTOS ============ -->
+<section id="fotos" class="section">
+  <h2 class="section-title">Algunas fotos de ti y de este año de vida </h2>
+  <div class="corkboard" id="photoGrid"></div>
+</section>
+
+<!-- ============ 21 RAZONES ============ -->
+<section id="razones" class="section">
+  <h2 class="section-title">21 razones para celebrarte</h2>
+  <p class="section-sub">Toca cada globo y descubre una razón · <span id="reasonsCount">0/21</span> descubiertas</p>
+  <div class="balloon-grid" id="balloonGrid"></div>
+  <div class="bonus-message" id="bonusMessage">🎊 ¡Las descubriste todas! Bonus: te amo más de lo que 21 globos pueden contener. 🎊</div>
+</section>
+
+<!-- ============ CARTA ============ -->
+<section id="carta" class="section">
+  <p class="eyebrow">Capítulo 3</p>
+  <h2 class="section-title">Una cartita para ti</h2>
+  <p class="section-sub">Esta la escribí pensando solo en ti</p>
+  <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Abrir carta">
+    <div class="envelope-flap"></div>
+    <div class="envelope-body"><span>✉️ Toca para abrir</span></div>
+  </div>
+  <div class="letter-paper" id="letterPaper"></div>
+</section>
+
+<!-- ============ PASTEL ============ -->
+<section id="pastel" class="section">
+  <p class="eyebrow">Capítulo final</p>
+  <h2 class="section-title">Pide un deseo</h2>
+  <p class="section-sub">Sopla las velitas (puedes hacerlo con el dedo)</p>
+  <div class="cake">
+    <div class="cake-layers">
+      <div class="candles" id="candles"></div>
+      <div class="cake-top"></div>
+      <div class="cake-bottom"></div>
+    </div>
+  </div>
+  <p class="wish-message" id="wishMessage">¡Que se cumplan todos tus deseos! Y los que no se cumplan solos, aquí estaré para ayudarte.</p>
+</section>
+
+<footer class="footer">
+  <p>No es la mejor página del mundo mundial, pero lo hice con mucho amor, perdón por no poder estar contigo en estos días.</p>
+  <p> <span id="yourNameFooter"></span></p>
+</footer>
+
+<script>
+/* =========================================================
+   ✏️ EDITA AQUÍ: personaliza nombres, fotos, razones y carta
+   ========================================================= */
+const CONFIG = {
+  partnerName: "Mailoff",           // ✏️ nombre de tu pareja
+  yourName: "Yayis",            // ✏️ tu nombre
+
+  // ✏️ Pon la URL de cada foto en "src" (puede ser un link de internet).
+  // Si lo dejas vacío "", se muestra un marcador bonito en su lugar.
+  photos: [
+    { src: "fotos/coronado.jpeg", caption: "Nanis borracha" },
+    { src: "fotos/elote.jpeg", caption: "Nanis elotera" },
+    { src: "fotos/sobrinos.jpeg", caption: "Con tus sobrinos de bbs" },
+    { src: "fotos/vestidorosa.jpeg", caption: "Princesa como siempre" },
+    { src: "fotos/stitch.jpeg", caption: "Con tu clon" },
+    { src: "fotos/pajaritos.jpeg", caption: "En tu lugar favorito" },
+    { src: "fotos/hospital.jpeg", caption: "Cumpliendo objetivos" },
+    { src: "fotos/juguetes.jpeg", caption: "Demostrando lo buena persona que eres" },
+    { src: "fotos/congreso.jpeg", caption: "Y lo dedicada que eres en tu rubro" },
+    { src: "fotos/AIperritos.jpeg", caption: "" },
+    { src: "fotos/pelomarss.jpeg", caption: "" },
+    { src: "fotos/Marss.jpeg", caption: "" }
+  ],
+
+  // ✏️ Puedes cambiar cualquiera de las 21 razones por algo más personal
+  reasons: [
+    "Porque tu risa es mi sonido favorito del mundo.",
+    "Porque haces que los lunes se sientan un poco menos lunes.",
+    "Porque siempre encuentras la palabra exacta cuando la necesito.",
+    "Porque tienes una paciencia infinita conmigo.",
+    "Porque contigo hasta hacer fila es divertido.",
+    "Porque tu abrazo arregla casi cualquier mal día.",
+    "Porque te emocionas por las cosas pequeñas y eso me encanta.",
+    "Porque me retas a ser una mejor versión de mí.",
+    "Porque tienes buen gusto musical (el peor, pero es divertido igual).",
+    "Porque tu forma de bailar cuando crees que nadie te ve es mi favorita.",
+    "Porque siempre dices la verdad, aunque no sea fácil.",
+    "Porque cuidas a quienes amas como si fuera tu misión de vida.",
+    "Porque tienes una mente brillante y un corazón todavía más grande.",
+    "Porque hasta tus comentarios random me hacen el día (de que ya tengo luz ya me siento parte de la sociedad).",
+    "Porque eres mi persona favorita para no hacer nada.",
+    "Porque cada año que cumples, el mundo se pone un poco mejor.",
+    "Porque tu apoyo nunca tiene condiciones.",
+    "Porque me haces reír incluso cuando estoy de mal humor.",
+    "Porque sueñas en grande y me invitas a soñar contigo.",
+    "Porque eres exactamente como quiero que seas: tú.",
+    "Porque hoy cumples 21 y yo cumplo 21 razones más para amarte."
+  ],
+
+  // ✏️ Cambia el texto de la carta como quieras (cada línea es un párrafo)
+  letterParagraphs: [
+    "No puedo creer que ya tengas 21. Siento que cada año contigo ha sido mejor que el anterior",
+    "Aunque te lo he dicho muchas veces, sabes que te admiro un montón, es increíble la dedicación que tienes día con día, llegues lejos o llegues cerca yo quiero estar contigo. Sin duda verte echarle ganas a la vida hace que me intente superar a mí mismo y eso te lo voy a agradecer toda la vida",
+    "Sé que este año en tu vida ha sido de enormes altibajos, pero a pesar de todo sigues adelante y eso te lo voy a respetar siempre. Estoy muy orgulloso de tí, de las cosas que has logrado en la uni, de las cosas que haces por la comunidad y por las personas necesitadas.",
+    "No sé si de verdad en tus cumpleaños no he cumplido las expectativas o si no te he dado lo que deseabas, pero tlj q intento hacer todo por ti, intento darte todo y que disfrutes tus cumpleaños, perdón por este año no poder llevarte a donde querías, perdón por arruinar el día que teníamos preparado, pero pinky que te lo voy a reponer, quieras o no.",
+    "Te debo mucho más de lo que te puedo entregar Nanis",
+    "Que Dios te acompañe todos los días de tu vida, que te bendiga en sobreabundancia y cumpla todos los deseos de tu corazón",
+    "Gracias por elegirme todos los días. Marss y yo te amamos muchísimo y espero me permitas celebrarte muchos años más."
+  ]
+};
+/* ========================= FIN DE LA ZONA EDITABLE ========================= */
+
+const FLOATER_COLORS = ['#FF5DA2', '#FFD23F', '#8C54FF', '#3FC1E0'];
+const PHOTO_GRADIENTS = [
+  'linear-gradient(135deg,#FF5DA2,#8C54FF)',
+  'linear-gradient(135deg,#3FC1E0,#8C54FF)',
+  'linear-gradient(135deg,#FFD23F,#FF5DA2)',
+  'linear-gradient(135deg,#8C54FF,#3FC1E0)'
+];
+const BALLOON_COLOR_PAIRS = [
+  ['#FF5DA2', '#E8408C'],
+  ['#FFD23F', '#E6B800'],
+  ['#8C54FF', '#6E3AE0'],
+  ['#3FC1E0', '#1EA0C0']
+];
+const POLAROID_ROTATIONS = [-6, 4, -3, 6, -5, 3];
+
+function burstConfetti(count) {
+  count = count || 120;
+  const layer = document.getElementById('confettiLayer');
+  for (let i = 0; i < count; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    const size = 6 + Math.random() * 6;
+    piece.style.width = size + 'px';
+    piece.style.height = (size * 0.4 + 4) + 'px';
+    piece.style.left = Math.random() * 100 + '%';
+    piece.style.background = FLOATER_COLORS[Math.floor(Math.random() * FLOATER_COLORS.length)];
+    const duration = 2.5 + Math.random() * 2;
+    piece.style.animationDuration = duration + 's';
+    piece.style.animationDelay = (Math.random() * 0.4) + 's';
+    piece.style.transform = 'rotate(' + (Math.random() * 360) + 'deg)';
+    layer.appendChild(piece);
+    setTimeout(() => piece.remove(), (duration + 0.6) * 1000);
+  }
+}
+
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+}
+
+function buildFloaters() {
+  const container = document.getElementById('floaters');
+  for (let i = 0; i < 6; i++) {
+    const el = document.createElement('div');
+    el.className = 'floater';
+    el.style.left = (5 + i * 16 + Math.random() * 6) + '%';
+    el.style.background = FLOATER_COLORS[i % FLOATER_COLORS.length];
+    el.style.animationDuration = (14 + Math.random() * 8) + 's';
+    el.style.animationDelay = (-Math.random() * 14) + 's';
+    container.appendChild(el);
+  }
+}
+
+function buildPhotos() {
+  const grid = document.getElementById('photoGrid');
+  CONFIG.photos.forEach((photo, i) => {
+    const card = document.createElement('div');
+    card.className = 'polaroid';
+    card.style.transform = 'rotate(' + POLAROID_ROTATIONS[i % POLAROID_ROTATIONS.length] + 'deg)';
+
+    const frame = document.createElement('div');
+    frame.className = 'photo-frame';
+
+    if (photo.src) {
+      const img = document.createElement('img');
+      img.src = photo.src;
+      img.alt = photo.caption;
+      frame.appendChild(img);
+    } else {
+      const ph = document.createElement('div');
+      ph.className = 'photo-placeholder';
+      ph.style.background = PHOTO_GRADIENTS[i % PHOTO_GRADIENTS.length];
+      ph.innerHTML = '📷<br>Pon tu foto aquí';
+      frame.appendChild(ph);
+    }
+
+    const cap = document.createElement('p');
+    cap.className = 'polaroid-caption';
+    cap.textContent = photo.caption;
+
+    card.appendChild(frame);
+    card.appendChild(cap);
+    grid.appendChild(card);
+  });
+}
+
+function buildBalloons() {
+  const grid = document.getElementById('balloonGrid');
+  const counter = document.getElementById('reasonsCount');
+  const bonus = document.getElementById('bonusMessage');
+  let opened = 0;
+  const total = CONFIG.reasons.length;
+
+  CONFIG.reasons.forEach((reason, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'balloon';
+    btn.setAttribute('aria-label', 'Globo número ' + (i + 1));
+
+    const inner = document.createElement('div');
+    inner.className = 'balloon-inner';
+
+    const front = document.createElement('div');
+    front.className = 'balloon-face front';
+    front.style.background = BALLOON_COLOR_PAIRS[i % 4][0];
+    front.textContent = i + 1;
+
+    const back = document.createElement('div');
+    back.className = 'balloon-face back';
+    back.style.background = BALLOON_COLOR_PAIRS[i % 4][1];
+    back.textContent = reason;
+
+    inner.appendChild(front);
+    inner.appendChild(back);
+    btn.appendChild(inner);
+
+    btn.addEventListener('click', () => {
+      if (!btn.classList.contains('flipped')) {
+        btn.classList.add('flipped');
+        opened++;
+        counter.textContent = opened + '/' + total;
+        if (opened === total) {
+          bonus.classList.add('show');
+          burstConfetti(160);
+        }
+      }
+    });
+
+    grid.appendChild(btn);
+  });
+}
+
+function buildCake() {
+  const container = document.getElementById('candles');
+  const wishMessage = document.getElementById('wishMessage');
+  const colors = ['#FF5DA2', '#FFD23F', '#8C54FF', '#3FC1E0', '#E8408C'];
+  const candleCount = 5;
+  let blown = 0;
+
+  for (let i = 0; i < candleCount; i++) {
+    const candle = document.createElement('div');
+    candle.className = 'candle';
+    candle.style.background = colors[i % colors.length];
+
+    const flame = document.createElement('div');
+    flame.className = 'flame';
+    flame.setAttribute('role', 'button');
+    flame.setAttribute('aria-label', 'Soplar vela ' + (i + 1));
+
+    flame.addEventListener('click', () => {
+      if (!candle.classList.contains('blown')) {
+        candle.classList.add('blown');
+        blown++;
+        const smoke = document.createElement('div');
+        smoke.className = 'smoke';
+        candle.appendChild(smoke);
+        setTimeout(() => smoke.remove(), 1300);
+        if (blown === candleCount) {
+          wishMessage.classList.add('show');
+          burstConfetti(200);
+        }
+      }
+    });
+
+    candle.appendChild(flame);
+    container.appendChild(candle);
+  }
+}
+
+function buildLetter() {
+  const wrap = document.getElementById('letterPaper');
+  const greet = document.createElement('p');
+  greet.textContent = 'Querid@ ' + CONFIG.partnerName + ',';
+  wrap.appendChild(greet);
+
+  CONFIG.letterParagraphs.forEach(text => {
+    const p = document.createElement('p');
+    p.textContent = text;
+    wrap.appendChild(p);
+  });
+
+  const sig = document.createElement('p');
+  sig.className = 'signature';
+  sig.innerHTML = 'Con todo mi cariño,<br>' + CONFIG.yourName;
+  wrap.appendChild(sig);
+}
+
+function openGift() {
+  const box = document.getElementById('giftBox');
+  const wrap = document.getElementById('giftWrap');
+  if (box.classList.contains('opened')) return;
+  box.classList.add('opened');
+  setTimeout(() => {
+    wrap.classList.add('hidden');
+    document.getElementById('heroReveal').classList.add('show');
+    burstConfetti(150);
+  }, 500);
+}
+
+function toggleEnvelope() {
+  const env = document.getElementById('envelope');
+  const letter = document.getElementById('letterPaper');
+  env.classList.toggle('open');
+  letter.classList.toggle('show');
+  if (letter.classList.contains('show')) {
+    setTimeout(() => letter.scrollIntoView({ behavior: 'smooth', block: 'center' }), 200);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('partnerNameHero').textContent = CONFIG.partnerName;
+  document.getElementById('yourNameFooter').textContent = CONFIG.yourName;
+
+  buildFloaters();
+  buildPhotos();
+  buildBalloons();
+  buildCake();
+  buildLetter();
+
+  document.getElementById('giftWrap').addEventListener('click', openGift);
+
+  const envelope = document.getElementById('envelope');
+  envelope.addEventListener('click', toggleEnvelope);
+  envelope.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleEnvelope(); }
+  });
+
+  document.getElementById('replayBtn').addEventListener('click', () => burstConfetti(140));
+});
+</script>
+</body>
+</html>
