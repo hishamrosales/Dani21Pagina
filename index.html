@@ -298,7 +298,7 @@
   <p class="section-sub">Esta la escribí pensando solo en ti</p>
   <div class="envelope" id="envelope" role="button" tabindex="0" aria-label="Abrir carta">
     <div class="envelope-flap"></div>
-    <div class="envelope-body"><span>✉️ Toca para abrir</span></div>
+    <div class="envelope-body"><span>Toca para abrir</span></div>
   </div>
   <div class="letter-paper" id="letterPaper"></div>
 </section>
@@ -557,7 +557,7 @@ function buildCake() {
 function buildLetter() {
   const wrap = document.getElementById('letterPaper');
   const greet = document.createElement('p');
-  greet.textContent = 'Querid@ ' + CONFIG.partnerName + ',';
+  greet.textContent = CONFIG.partnerName + ',';
   wrap.appendChild(greet);
 
   CONFIG.letterParagraphs.forEach(text => {
